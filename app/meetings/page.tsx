@@ -1,8 +1,28 @@
-import MeetingCard from '@/components/MeetingCard';
-import { getMeetings } from '@/lib/meetings-db';
+import { headers } from 'next/headers';
 
-export default function MeetingsPage() {
-  const meetings = getMeetings();
+import MeetingCard from '@/components/MeetingCard';
+import type { SacramentMeeting } from '@/lib/types';
+
+async function getMeetings(): Promise<SacramentMeeting[]> {
+  const headersList = await headers();
+
+  const host = headersList.get('host');
+  const protocol =
+    headersList.get('x-forwarded-proto') ?? 'http';
+
+  const response = await fetch(
+    `${protocol}://${host}/api/meetings`
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch meetings.');
+  }
+
+  return response.json();
+}
+
+export default async function MeetingsPage() {
+  const meetings = await getMeetings();
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">

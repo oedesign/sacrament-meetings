@@ -1,8 +1,18 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
+      <div className="mb-10 overflow-hidden rounded-xl">
+            <Image
+              src="/mormon-church-meeting1.jpg"
+              alt="Church meeting building"
+              width={1200}
+              height={600}
+              className="h-auto w-full object-cover"
+            />
+      </div>
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
           Sacrament Meeting Planner

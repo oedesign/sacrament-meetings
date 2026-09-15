@@ -1,6 +1,54 @@
 import type { SacramentMeeting } from './types';
 
 const meetings: SacramentMeeting[] = [
+    {
+    id: 6,
+    date: '2026-09-13',
+    meetingType: 'regular',
+    presiding: 'Bishop Johnson',
+    conducting: 'Sister Brown',
+    announcements: [
+      'Ward conference will be held next Sunday.',
+      'Youth activity will be held on Wednesday evening.'
+    ],
+    openingHymn: {
+      number: 85,
+      title: 'How Firm a Foundation'
+    },
+    openingPrayer: 'Brother Davis',
+    wardBusiness: [
+      {
+        description: 'Sustaining of new ward leaders'
+      }
+    ],
+    stakeBusiness: false,
+    sacramentHymn: {
+      number: 169,
+      title: 'In Remembrance of Thy Suffering'
+    },
+    speakers: [
+      {
+        name: 'Sister Williams',
+        topic: 'Strengthening Our Faith',
+        type: 'speaker'
+      },
+      {
+        name: 'Brother Anderson',
+        topic: 'Serving in the Church',
+        type: 'speaker'
+      },
+      {
+        name: 'Ward Choir',
+        topic: 'Special Musical Number',
+        type: 'musical-number'
+      }
+    ],
+    closingHymn: {
+      number: 223,
+      title: 'Have I Done Any Good?'
+    },
+    closingPrayer: 'Sister Smith'
+  },
   {
     id: 1,
     date: '2026-09-06',
