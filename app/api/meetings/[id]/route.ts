@@ -1,9 +1,7 @@
 import { getMeetingById } from '@/lib/meetings-db';
 
 interface MeetingRouteContext {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(
@@ -13,14 +11,18 @@ export async function GET(
   const { id } = await context.params;
   const meetingId = Number(id);
 
-  if (Number.isNaN(meetingId)) {
+  if (
+    id.trim() === '' ||
+    !Number.isInteger(meetingId) ||
+    !Number.isFinite(meetingId)
+  ) {
     return Response.json(
       { error: 'Invalid meeting ID.' },
       { status: 400 }
     );
   }
 
-  const meeting = getMeetingById(meetingId);
+  const meeting = await getMeetingById(meetingId);
 
   if (!meeting) {
     return Response.json(
