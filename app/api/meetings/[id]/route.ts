@@ -5,9 +5,13 @@ interface MeetingRouteContext {
 }
 
 export async function GET(
+  request: Request,
   context: MeetingRouteContext
 ) {
+  void request;
+
   const { id } = await context.params;
+
   const meetingId = Number(id);
 
   if (

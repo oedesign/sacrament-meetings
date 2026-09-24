@@ -16,9 +16,9 @@ function getMostRecentSunday(): string {
   return `${year}-${month}-${day}`;
 }
 
-export default function CurrentMeetingPage() {
+export default async function CurrentMeetingPage() {
   const sunday = getMostRecentSunday();
-  const meetings = getMeetings(sunday);
+  const meetings = await getMeetings(sunday);
 
   if (meetings.length > 0) {
     redirect(`/meetings/${meetings[0].id}`);
