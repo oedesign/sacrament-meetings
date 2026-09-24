@@ -1,23 +1,9 @@
 import MeetingCard from '@/components/MeetingCard';
-import { getMeetingsTotalPages } from '@/lib/meetings-db';
-import type { SacramentMeeting } from '@/lib/types';
+import {
+  getMeetings,
+  getMeetingsTotalPages,
+} from '@/lib/meetings-db';
 import { MeetingSearch } from '@/components/MeetingSearch';
-
-function isSacramentMeeting(value: unknown): value is SacramentMeeting {
-  if (!value || typeof value !== 'object') {
-    return false;
-  }
-
-  const meeting = value as Record<string, unknown>;
-
-  return (
-    typeof meeting.id === 'number' &&
-    typeof meeting.date === 'string' &&
-    typeof meeting.meetingType === 'string' &&
-    typeof meeting.presiding === 'string' &&
-    typeof meeting.conducting === 'string'
-  );
-}
 
 export default async function MeetingsPage({
   searchParams,
@@ -30,33 +16,14 @@ export default async function MeetingsPage({
   const params = await searchParams;
 
   const query = params.query ?? '';
-  const page = Number(params.page ?? '1');
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
+  const parsedPage = Number(params.page ?? '1');
+  const page =
+    Number.isInteger(parsedPage) && parsedPage > 0
+      ? parsedPage
+      : 1;
 
-  const response = await fetch(
-    `${baseUrl}/api/meetings?query=${encodeURIComponent(query)}&page=${page}`,
-    {
-      cache: 'no-store',
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch meetings.');
-  }
-
-  const data: unknown = await response.json();
-
-  if (
-    !Array.isArray(data) ||
-    !data.every(isSacramentMeeting)
-  ) {
-    throw new Error('Invalid meetings API response.');
-  }
-
-  const meetings = data;
-
+  const meetings = await getMeetings(query, page);
   const totalPages = await getMeetingsTotalPages(query);
 
   const previousPage = page - 1;
@@ -70,7 +37,7 @@ export default async function MeetingsPage({
         </h1>
 
         <div className="mb-8">
-             <MeetingSearch />
+          <MeetingSearch />
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -99,8 +66,8 @@ export default async function MeetingsPage({
           )}
 
           <span className="text-sm font-medium text-gray-900">
-                 Page {page} of {totalPages}
-         </span>
+            Page {page} of {totalPages}
+          </span>
 
           {page < totalPages ? (
             <a
