@@ -1,24 +1,6 @@
 import { notFound } from 'next/navigation';
 import MeetingDetail from '@/components/MeetingDetail';
-import type { SacramentMeeting } from '@/lib/types';
-
-function isSacramentMeeting(
-  value: unknown
-): value is SacramentMeeting {
-  if (!value || typeof value !== 'object') {
-    return false;
-  }
-
-  const meeting = value as Record<string, unknown>;
-
-  return (
-    typeof meeting.id === 'number' &&
-    typeof meeting.date === 'string' &&
-    typeof meeting.meetingType === 'string' &&
-    typeof meeting.presiding === 'string' &&
-    typeof meeting.conducting === 'string'
-  );
-}
+import { getMeetingById } from '@/lib/meetings-db';
 
 interface MeetingPageProps {
   params: Promise<{ id: string }>;
@@ -29,30 +11,21 @@ export default async function MeetingPage({
 }: MeetingPageProps) {
   const { id } = await params;
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/meetings/${id}`,
-    {
-      cache: 'no-store',
-    }
-  );
+  const meetingId = Number(id);
 
-  if (response.status === 404) {
+  if (!Number.isInteger(meetingId) || meetingId <= 0) {
     notFound();
   }
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch meeting.');
-  }
+  const meeting = await getMeetingById(meetingId);
 
-  const data: unknown = await response.json();
-
-  if (!isSacramentMeeting(data)) {
-    throw new Error('Invalid meeting API response.');
+  if (!meeting) {
+    notFound();
   }
 
   return (
     <section className="px-6 py-12">
-      <MeetingDetail meeting={data} />
+      <MeetingDetail meeting={meeting} />
     </section>
   );
 }
