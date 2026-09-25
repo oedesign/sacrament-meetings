@@ -32,7 +32,7 @@ export default async function MeetingsPage({
   return (
     <section className="px-6 py-12">
       <div className="mx-auto max-w-5xl">
-        <h1 className="mb-8 text-3xl font-bold">
+        <h1 className="mb-8 text-3xl font-bold text-blue-600">
           All Sacrament Meetings
         </h1>
 
