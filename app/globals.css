@@ -24,3 +24,105 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+.meeting-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.meeting-page h1 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.meeting-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: #ffffff;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+}
+
+.meeting-form>div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.meeting-form label {
+  font-weight: 600;
+}
+
+.meeting-form input,
+.meeting-form select,
+.meeting-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font: inherit;
+  background: #ffffff;
+}
+
+.meeting-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.meeting-form input:focus,
+.meeting-form select:focus,
+.meeting-form textarea:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.meeting-form button {
+  width: fit-content;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.meeting-form button:hover {
+  background: #1d4ed8;
+}
+
+.meeting-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.meeting-form [aria-live="polite"] {
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.meeting-form>p[aria-live="polite"] {
+  margin: 0;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .meeting-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .meeting-form {
+    padding: 1.25rem;
+  }
+
+  .meeting-page h1 {
+    font-size: 1.5rem;
+  }
+}
