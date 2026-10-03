@@ -26,7 +26,7 @@ export default async function EditMeetingPage({
 
   return (
     <main className="meeting-page">
-      <h1>Edit Sacrament Meeting</h1>
+      <h1 className="text-blue-600">Edit Sacrament Meeting</h1>
 
       <EditMeetingForm meeting={meeting} />
     </main>
