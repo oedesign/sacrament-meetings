@@ -18,8 +18,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Sacrament Meeting Planner',
-  description: 'Plan and review sacrament meeting programs.',
+  metadataBase: new URL(
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+),
+  title: {
+    default: 'Sacrament Meeting Planner',
+    template: '%s | Sacrament Meeting Planner',
+  },
+  description:
+    'Plan, manage, and review sacrament meeting programs for your ward.',
+  openGraph: {
+    title: 'Sacrament Meeting Planner',
+    description:
+      'Plan, manage, and review sacrament meeting programs for your ward.',
+    siteName: 'Sacrament Meeting Planner',
+    type: 'website',
+    images: [
+      {
+        url: '/mormon-church-meeting1.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Sacrament meeting',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
